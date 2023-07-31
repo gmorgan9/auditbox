@@ -36,36 +36,39 @@
   }
 
   function uploadFile() {
-    const fileInput = document.getElementById('fileInput');
-    const file = fileInput.files[0];
+  const fileInput = document.getElementById('fileInput');
+  const file = fileInput.files[0];
 
-    const metadata = {
-      name: file.name,
-      mimeType: file.type
-    };
+  const metadata = {
+    name: file.name,
+    mimeType: file.type
+  };
 
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = function (event) {
-      const base64Data = event.target.result.split(',')[1];
+  const reader = new FileReader();
+  reader.readAsDataURL(file);
+  reader.onload = function (event) {
+    const base64Data = event.target.result.split(',')[1];
 
-      const accessToken = gapi.auth.getToken().access_token;
-      const uploadRequest = gapi.client.drive.files.create({
+    gapi.client.drive.files
+      .create({
         resource: metadata,
         media: {
           mimeType: file.type,
           body: base64Data
         },
         fields: 'id, name, mimeType, size'
-      });
-
-      uploadRequest.then(function (response) {
-        displayStatus(`File uploaded successfully! ID: ${response.result.id}, Name: ${response.result.name}, Size: ${response.result.size}`);
-      }, function (error) {
+      })
+      .then(function (response) {
+        displayStatus(
+          `File uploaded successfully! ID: ${response.result.id}, Name: ${response.result.name}, Size: ${response.result.size}`
+        );
+      })
+      .catch(function (error) {
         displayStatus(`Error uploading file: ${error.result.error.message}`);
       });
-    };
-  }
+  };
+}
+
 
   function displayStatus(message) {
     const statusDiv = document.getElementById('status');
