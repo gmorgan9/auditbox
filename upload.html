@@ -15,103 +15,35 @@
 </body>
 
 <script>
-    gapi.load('client:auth2', initClient);
-  </script>
-  
+    // Replace these values with your own
+const accessToken = 'dRNbuQdkPVIBWmNzDaypqzfDEeCFrjYV';
+const folderId = 'Audit';
 
-<!-- Include the Google API Client Library -->
-<script src="https://apis.google.com/js/api.js"></script>
-<script async defer src="https://apis.google.com/js/api.js" onload="handleClientLoad()"></script>
+// File to be uploaded
+const file = document.getElementById('fileInput').files[0];
 
-<script>
-  const clientId = '863132390401-cirnugjvu08lu2cc32jkjgsfov7u1b1a.apps.googleusercontent.com'; // Replace with your OAuth client ID
-  const apiKey = 'AIzaSyCN5N-NZ7zxnbrBPCiL4JpidcIJ74KszZk'; // Replace with your API key
-  const scope = 'https://www.googleapis.com/auth/drive'; // The scope needed to access Google Drive
+// Prepare the API request
+const uploadUrl = `https://upload.box.com/api/2.0/files/content`;
+const formData = new FormData();
+formData.append('file', file);
+formData.append('parent_id', folderId);
 
-
-gapi.auth2.init({
-  client_id: clientId,
-  scope: 'https://www.googleapis.com/auth/drive',
-});
-
-const authInstance = gapi.auth2.getAuthInstance();
-
-
-
-
-  function handleClientLoad() {
-    gapi.load('client:auth2', initClient);
-  }
-
-  function initClient() {
-  gapi.client.init({
-    apiKey: apiKey,
-    clientId: clientId,
-    discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"],
-    scope: scope
-  }).then(function () {
-    // Client is initialized and ready to use.
-
-    // Check if the user is already signed in; if not, prompt for sign-in.
-    if (!gapi.auth2.getAuthInstance().isSignedIn.get()) {
-      gapi.auth2.getAuthInstance().signIn();
-    }
+// Make the API request
+fetch(uploadUrl, {
+  method: 'POST',
+  headers: {
+    Authorization: `Bearer ${accessToken}`,
+  },
+  body: formData,
+})
+  .then((response) => response.json())
+  .then((data) => {
+    console.log('File uploaded successfully!', data);
+  })
+  .catch((error) => {
+    console.error('Error uploading file:', error);
   });
-}
 
-
-
-
-function uploadFile() {
-  const fileInput = document.getElementById('fileInput');
-  const file = fileInput.files[0];
-
-  const metadata = {
-    name: file.name,
-    mimeType: file.type
-  };
-
-  const reader = new FileReader();
-  reader.readAsDataURL(file);
-  reader.onload = function (event) {
-    const base64Data = event.target.result.split(',')[1];
-
-    // Use the OAuth 2.0 access token to authenticate the API request.
-  const authInstance = gapi.auth2.getAuthInstance();
-  if (authInstance.isSignedIn.get()) {
-    const user = authInstance.currentUser.get();
-    const authResponse = user.getAuthResponse();
-    const accessToken = authResponse.access_token;
-
-    // Include the access token in the API request headers
-    const uploadRequest = gapi.client.request({
-      path: 'https://www.googleapis.com/upload/drive/v3/files',
-      method: 'POST',
-      params: {
-        uploadType: 'media'
-      },
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        'Content-Type': file.type
-      },
-      body: base64Data
-    });
-
-    uploadRequest.then(function (response) {
-      displayStatus(`File uploaded successfully! ID: ${response.result.id}, Name: ${response.result.name}, Size: ${response.result.size}`);
-    }).catch(function (error) {
-      displayStatus(`Error uploading file: ${error.result.error.message}`);
-    });
-  };
-}
-}
-
-
-
-  function displayStatus(message) {
-    const statusDiv = document.getElementById('status');
-    statusDiv.textContent = message;
-  }
 </script>
 
 
