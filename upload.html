@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Google Drive Upload</title>
+</head>
+<body>
+    <h1>Upload File to Google Drive</h1>
+    <input type="file" id="fileInput">
+    <button onclick="uploadFile()">Upload</button>
+
+    <div id="status"></div>
+</body>
+
+<!-- Include the Google API Client Library -->
+<script src="https://apis.google.com/js/api.js"></script>
+
+<script>
+  const clientId = '863132390401-cirnugjvu08lu2cc32jkjgsfov7u1b1a.apps.googleusercontent.com'; // Replace with your OAuth client ID
+  const apiKey = 'AIzaSyCN5N-NZ7zxnbrBPCiL4JpidcIJ74KszZk'; // Replace with your API key
+  const scope = 'https://www.googleapis.com/auth/drive'; // The scope needed to access Google Drive
+
+  function handleClientLoad() {
+    gapi.load('client:auth2', initClient);
+  }
+
+  function initClient() {
+    gapi.client.init({
+      apiKey: apiKey,
+      clientId: clientId,
+      discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"],
+      scope: scope
+    }).then(function () {
+      // Client is initialized and ready to use.
+    });
+  }
+
+  function uploadFile() {
+    const fileInput = document.getElementById('fileInput');
+    const file = fileInput.files[0];
+
+    const metadata = {
+      name: file.name,
+      mimeType: file.type
+    };
+
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function (event) {
+      const base64Data = event.target.result.split(',')[1];
+
+      const accessToken = gapi.auth.getToken().access_token;
+      const uploadRequest = gapi.client.drive.files.create({
+        resource: metadata,
+        media: {
+          mimeType: file.type,
+          body: base64Data
+        },
+        fields: 'id, name, mimeType, size'
+      });
+
+      uploadRequest.then(function (response) {
+        displayStatus(`File uploaded successfully! ID: ${response.result.id}, Name: ${response.result.name}, Size: ${response.result.size}`);
+      }, function (error) {
+        displayStatus(`Error uploading file: ${error.result.error.message}`);
+      });
+    };
+  }
+
+  function displayStatus(message) {
+    const statusDiv = document.getElementById('status');
+    statusDiv.textContent = message;
+  }
+</script>
+
+<script async defer src="https://apis.google.com/js/api.js" onload="handleClientLoad()"></script>
+
+
+</html>
