@@ -9,7 +9,7 @@ const tokenUrl = 'https://api.box.com/oauth2/token';
 // Prepare the data for the token request
 const formData = new FormData();
 formData.append('grant_type', 'authorization_code');
-formData.append('code', authorization_Code);
+// formData.append('code', authorization_Code);
 formData.append('client_id', clientId);
 formData.append('client_secret', clientSecret);
 formData.append('redirect_uri', redirectUri);
