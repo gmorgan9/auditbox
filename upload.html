@@ -25,15 +25,21 @@
   }
 
   function initClient() {
-    gapi.client.init({
-      apiKey: apiKey,
-      clientId: clientId,
-      discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"],
-      scope: scope
-    }).then(function () {
-      // Client is initialized and ready to use.
-    });
-  }
+  gapi.client.init({
+    apiKey: apiKey,
+    clientId: clientId,
+    discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"],
+    scope: scope
+  }).then(function () {
+    // Client is initialized and ready to use.
+
+    // Prompt the user to sign in if not already signed in.
+    if (!gapi.auth2.getAuthInstance().isSignedIn.get()) {
+      gapi.auth2.getAuthInstance().signIn();
+    }
+  });
+}
+
 
   function uploadFile() {
   const fileInput = document.getElementById('fileInput');
