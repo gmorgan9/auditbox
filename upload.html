@@ -28,6 +28,17 @@
   const apiKey = 'AIzaSyCN5N-NZ7zxnbrBPCiL4JpidcIJ74KszZk'; // Replace with your API key
   const scope = 'https://www.googleapis.com/auth/drive'; // The scope needed to access Google Drive
 
+
+gapi.auth2.init({
+  client_id: clientId,
+  scope: 'https://www.googleapis.com/auth/drive',
+});
+
+const authInstance = gapi.auth2.getAuthInstance();
+
+
+
+
   function handleClientLoad() {
     gapi.load('client:auth2', initClient);
   }
