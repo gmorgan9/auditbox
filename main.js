@@ -1,7 +1,7 @@
 const clientId = 'hkijppeag6gwuykcpbkhuyj2dtga1ckb';
 const clientSecret = '2fCkF7Yq6Gg8QB5QSiqBV9yLPDX8H6l8'; // You should never expose the client secret on the client-side. Use a server-side application to keep it secure.
 const redirectUri = 'https://dev.morganserver.com';
-const authorization_Code = 'DX1585fdRnCGaoZkKUOR5bXAtnJuoFBm';
+// const authorization_Code = 'DX1585fdRnCGaoZkKUOR5bXAtnJuoFBm';
 
 // Token endpoint URL
 const tokenUrl = 'https://api.box.com/oauth2/token';
