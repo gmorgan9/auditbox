@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta name="google-signin-client_id" content="863132390401-cirnugjvu08lu2cc32jkjgsfov7u1b1a.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
     <title>Google Drive Upload</title>
 </head>
 <body>
@@ -9,6 +11,7 @@
     <button onclick="uploadFile()">Upload</button>
 
     <div id="status"></div>
+    <div class="g-signin2" data-onsuccess="onSignIn"></div>
 </body>
 
 <script>
