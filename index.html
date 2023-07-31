@@ -11,43 +11,79 @@
     <div id="status"></div>
 </body>
 
+
 <script>
-// Replace these values with your valid access token and folder ID
-const accessToken = 'DX1585fdRnCGaoZkKUOR5bXAtnJuoFBm';
-const folderId = '89a6brotfy2t5zo1xzpwhxfjpkb6e5q5';
 
-function uploadFile() {
-  // File to be uploaded
-  const file = document.getElementById('fileInput').files[0];
 
-  // Prepare the API request
-  const uploadUrl = `https://upload.box.com/api/2.0/files/content`;
-  const formData = new FormData();
-  formData.append('file', file);
-  formData.append('parent_id', folderId);
 
-  // Make the API request
-  fetch(uploadUrl, {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-    body: formData,
+const clientId = 'hkijppeag6gwuykcpbkhuyj2dtga1ckb';
+const clientSecret = '2fCkF7Yq6Gg8QB5QSiqBV9yLPDX8H6l8'; // You should never expose the client secret on the client-side. Use a server-side application to keep it secure.
+const redirectUri = 'https://dev.morganserver.com';
+const authorizationCode = 'DX1585fdRnCGaoZkKUOR5bXAtnJuoFBm';
+
+// Token endpoint URL
+const tokenUrl = 'https://api.box.com/oauth2/token';
+
+// Prepare the data for the token request
+const formData = new FormData();
+formData.append('grant_type', 'authorization_code');
+formData.append('code', authorizationCode);
+formData.append('client_id', clientId);
+formData.append('client_secret', clientSecret);
+formData.append('redirect_uri', redirectUri);
+
+// Make the POST request to exchange the code for an access token
+fetch(tokenUrl, {
+  method: 'POST',
+  body: formData,
+})
+  .then((response) => response.json())
+  .then((data) => {
+    // Here, you will have the access token in the "data.access_token" field.
+    console.log('Access Token:', data.access_token);
   })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log('File uploaded successfully!', data);
-      // You can update the UI with the upload status if needed
-      const statusDiv = document.getElementById('status');
-      statusDiv.textContent = 'File uploaded successfully!';
-    })
-    .catch((error) => {
-      console.error('Error uploading file:', error);
-      // Handle the error and update the UI with the error message if needed
-      const statusDiv = document.getElementById('status');
-      statusDiv.textContent = 'Error uploading file: ' + error.message;
-    });
-}
+  .catch((error) => {
+    console.error('Error exchanging code for access token:', error);
+  });
+
+
+
+// // Replace these values with your valid access token and folder ID
+// const accessToken = 'DX1585fdRnCGaoZkKUOR5bXAtnJuoFBm';
+// const folderId = '89a6brotfy2t5zo1xzpwhxfjpkb6e5q5';
+
+// function uploadFile() {
+//   // File to be uploaded
+//   const file = document.getElementById('fileInput').files[0];
+
+//   // Prepare the API request
+//   const uploadUrl = `https://upload.box.com/api/2.0/files/content`;
+//   const formData = new FormData();
+//   formData.append('file', file);
+//   formData.append('parent_id', folderId);
+
+//   // Make the API request
+//   fetch(uploadUrl, {
+//     method: 'POST',
+//     headers: {
+//       Authorization: `Bearer ${accessToken}`,
+//     },
+//     body: formData,
+//   })
+//     .then((response) => response.json())
+//     .then((data) => {
+//       console.log('File uploaded successfully!', data);
+//       // You can update the UI with the upload status if needed
+//       const statusDiv = document.getElementById('status');
+//       statusDiv.textContent = 'File uploaded successfully!';
+//     })
+//     .catch((error) => {
+//       console.error('Error uploading file:', error);
+//       // Handle the error and update the UI with the error message if needed
+//       const statusDiv = document.getElementById('status');
+//       statusDiv.textContent = 'Error uploading file: ' + error.message;
+//     });
+// }
 </script>
 
 </html>
