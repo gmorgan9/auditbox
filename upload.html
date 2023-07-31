@@ -38,12 +38,13 @@
   }).then(function () {
     // Client is initialized and ready to use.
 
-    // Prompt the user to sign in if not already signed in.
+    // Check if the user is already signed in; if not, prompt for sign-in.
     if (!gapi.auth2.getAuthInstance().isSignedIn.get()) {
       gapi.auth2.getAuthInstance().signIn();
     }
   });
 }
+
 
 
 function uploadFile() {
