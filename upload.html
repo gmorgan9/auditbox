@@ -50,6 +50,7 @@
 
 
 
+
 function uploadFile() {
   const fileInput = document.getElementById('fileInput');
   const file = fileInput.files[0];
@@ -65,20 +66,20 @@ function uploadFile() {
     const base64Data = event.target.result.split(',')[1];
 
     // Use the OAuth 2.0 access token to authenticate the API request.
-    const accessToken = gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().access_token;
+  const accessToken = gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().access_token;
 
-    const uploadRequest = gapi.client.request({
-      path: 'https://www.googleapis.com/upload/drive/v3/files',
-      method: 'POST',
-      params: {
-        uploadType: 'media'
-      },
-      headers: {
-        Authorization: 'Bearer ' + accessToken,
-        'Content-Type': file.type
-      },
-      body: base64Data
-    });
+const uploadRequest = gapi.client.request({
+  path: 'https://www.googleapis.com/upload/drive/v3/files',
+  method: 'POST',
+  params: {
+    uploadType: 'media'
+  },
+  headers: {
+    Authorization: 'Bearer ' + accessToken,
+    'Content-Type': file.type
+  },
+  body: base64Data
+});
 
     uploadRequest.then(function (response) {
       displayStatus(`File uploaded successfully! ID: ${response.result.id}, Name: ${response.result.name}, Size: ${response.result.size}`);
