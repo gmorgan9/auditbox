@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-signin-client_id" content="496778480199-emuc342edhvr2tn1theojj39ntn514vj.apps.googleusercontent.com">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="assets/styles/main.css">
+
+    <title>Login</title>
+
+    <style>
+        .login_form_btn:hover {
+            background-color: rgba(23, 62, 71, 0.9) !important;
+        }
+    </style>
+</head>
+<body>
+
+    <img src="assets/images/aarc-360-logo-1.png" class="mt-4 ms-4" width="150" alt="">
+    <!-- <div class="d-flex justify-content-center"> -->
+        <div class="card position-absolute top-50 start-50 translate-middle    shadow p-3 mb-5 bg-body-tertiary rounded" style="width: 25rem;">
+            <div class="card-body">
+                <h2>
+                    Sign in
+                </h2>
+                <p class="card-subtitle mb-4">
+                    Stay updated on client evidence
+                </p>
+                <form class="mx-auto" style="width: 95%;" action="">
+                    <input class="form-control mb-3" placeholder="Email" type="email" name="" id="">
+                    <input class="form-control mb-2" placeholder="Password" type="password" name="" id="">
+                    <a href="" class="ms-1 text-decoration-none">Forgot password?</a>
+                    <button class="form-control mt-4 text-white mb-3 p-2 login_form_btn" style="border-radius: 25px; background-color: #173e47;" type="submit">Sign in</button>
+                    
+
+                    <div class="container">
+                        <div class="row">
+                          <div class="col">
+                            <hr>
+                          </div>
+                          <div class="col-auto text-muted">or</div>
+                          <div class="col">
+                            <hr>
+                          </div>
+                        </div>
+                      </div>
+                    
+
+                    <div class="g-signin2 d-flex justify-content-center mt-1" data-onsuccess="onSignIn"></div>
+                </form> 
+            </div>
+        </div>
+    <!-- </div> -->
+    
+</body>
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+</html>
